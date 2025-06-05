@@ -27,7 +27,8 @@
       color: #000;
       text-align: center;
       font-family: 'Montserrat', sans-serif;
-      font-weight: 800; /* Montserrat Extra Bold */
+      font-weight: 800;  /* Montserrat Extra Bold */
+      font-size: 1.15em;  /* 15% bigger than default */
       padding: 12px 0;
       box-sizing: border-box;
     }
@@ -43,7 +44,7 @@
       display: inline-flex;
       align-items: center;
       margin: 0 4px;
-      font-size: 1.0em;
+      font-size: 0.95em; /* still slightly smaller than parent, but parent is now 15% up */
     }
 
     /* Ensure flag images don’t overflow */
@@ -92,7 +93,7 @@
               '<img src="' + flagUrl + '" alt="' + countryName + ' flag" />' +
               countryName +
               '</span>' +
-              ' ┃ Get Your Store Built in 24 Hours!';
+              ' – Get Your Store Built in 24 Hours!';
 
             // Show the banner now that it’s fully ready
             banner.style.display = 'block';
