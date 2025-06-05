@@ -5,35 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Geo-Targeted Banner with Flag</title>
 
-  <!-- Load Montserrat Extra Bold (800) from Google Fonts -->
+  <!-- Preload + Load Montserrat Extra Bold -->
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
+  />
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
     rel="stylesheet"
   />
 
   <style>
-    /* Remove default margins so the banner spans exactly */
-    html,
-    body {
+    html, body {
       margin: 0;
       padding: 0;
     }
 
-    /* Banner container */
+    /* Base banner styles */
     #geo-banner {
-      display: none; /* hidden until JS sets the country */
+      display: none;
       width: 100%;
       background-color: #FAD000;
       color: #000;
       text-align: center;
       font-family: 'Montserrat', sans-serif;
-      font-weight: 800;  /* Montserrat Extra Bold */
-      font-size: 1.15em;  /* 15% bigger than default */
+      font-weight: 800;
+      font-size: 1.15em;
       padding: 12px 0;
       box-sizing: border-box;
+      white-space: normal; /* allow wrapping */
     }
 
-    /* “Bubble” around the flag + country name */
     #geo-banner .country-bubble {
       background-color: #FFFFFF;
       color: #000;
@@ -44,25 +47,44 @@
       display: inline-flex;
       align-items: center;
       margin: 0 4px;
-      font-size: 0.95em; /* still slightly smaller than parent, but parent is now 15% up */
+      font-size: 0.95em;
     }
 
-    /* Ensure flag images don’t overflow */
     #geo-banner .country-bubble img {
       vertical-align: middle;
-      width: 20px;    /* adjust if you want a slightly bigger/smaller flag */
+      width: 20px;
       height: auto;
       margin-right: 6px;
       display: inline-block;
+    }
+
+    /* Medium mobile (≤480px) */
+    @media (max-width: 480px) {
+      #geo-banner {
+        font-size: 1em;
+        padding: 8px 0;
+      }
+      #geo-banner .country-bubble {
+        font-size: 0.85em;
+        padding: 2px 6px;
+      }
+      #geo-banner .country-bubble img {
+        width: 16px;
+        margin-right: 4px;
+      }
+    }
+
+    /* Very small mobile (≤360px): shorten text via JS fallback */
+    @media (max-width: 360px) {
+      #geo-banner {
+        font-size: 0.95em;
+      }
     }
   </style>
 </head>
 
 <body>
-  <!-- Geo-Dynamic Banner Placeholder -->
-  <div id="geo-banner">
-    Loading…
-  </div>
+  <div id="geo-banner">Loading…</div>
 
   <script>
     (function () {
@@ -78,29 +100,297 @@
           .then(function (data) {
             var countryName = data.country_name || '';
             var countryCode = data.country || '';
-            if (!countryName || !countryCode) {
-              throw new Error('Missing country data');
-            }
+            if (!countryName || !countryCode) throw new Error('Missing data');
 
-            // Build flag URL via FlagCDN (ISO code must be lowercase)
             var ccLower = countryCode.toLowerCase();
             var flagUrl = 'https://flagcdn.com/24x18/' + ccLower + '.png';
 
-            // Construct banner text with an <img> for the flag inside the bubble
-            banner.innerHTML =
-              'YES! THIS WORKS IN ' +
+            var innerText = 'YES! THIS WORKS IN ' +
               '<span class="country-bubble">' +
               '<img src="' + flagUrl + '" alt="' + countryName + ' flag" />' +
               countryName +
               '</span>' +
-              ' – Get Your Store Built in 24 Hours!';
+              ' <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geo-Targeted Banner with Flag</title>
 
-            // Show the banner now that it’s fully ready
+  <!-- Preload + Load Montserrat Extra Bold -->
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Base banner styles */
+    #geo-banner {
+      display: none;
+      width: 100%;
+      background-color: #FAD000;
+      color: #000;
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.15em;
+      padding: 12px 0;
+      box-sizing: border-box;
+      white-space: normal; /* allow wrapping */
+    }
+
+    #geo-banner .country-bubble {
+      background-color: #FFFFFF;
+      color: #000;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      margin: 0 4px;
+      font-size: 0.95em;
+    }
+
+    #geo-banner .country-bubble img {
+      vertical-align: middle;
+      width: 20px;
+      height: auto;
+      margin-right: 6px;
+      display: inline-block;
+    }
+
+    /* Medium mobile (≤480px) */
+    @media (max-width: 480px) {
+      #geo-banner {
+        font-size: 1em;
+        padding: 8px 0;
+      }
+      #geo-banner .country-bubble {
+        font-size: 0.85em;
+        padding: 2px 6px;
+      }
+      #geo-banner .country-bubble img {
+        width: 16px;
+        margin-right: 4px;
+      }
+    }
+
+    /* Very small mobile (≤360px): shorten text via JS fallback */
+    @media (max-width: 360px) {
+      #geo-banner {
+        font-size: 0.95em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="geo-banner">Loading…</div>
+
+  <script>
+    (function () {
+      document.addEventListener('DOMContentLoaded', function () {
+        var banner = document.getElementById('geo-banner');
+        if (!banner) return;
+
+        fetch('https://ipapi.co/json')
+          .then(function (res) {
+            if (!res.ok) throw new Error('Geo lookup failed');
+            return res.json();
+          })
+          .then(function (data) {
+            var countryName = data.country_name || '';
+            var countryCode = data.country || '';
+            if (!countryName || !countryCode) throw new Error('Missing data');
+
+            var ccLower = countryCode.toLowerCase();
+            var flagUrl = 'https://flagcdn.com/24x18/' + ccLower + '.png';
+
+            var innerText = 'YES! THIS WORKS IN ' +
+              '<span class="country-bubble">' +
+              '<img src="' + flagUrl + '" alt="' + countryName + ' flag" />' +
+              countryName +
+              '</span>' +
+              ' <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geo-Targeted Banner with Flag</title>
+
+  <!-- Preload + Load Montserrat Extra Bold -->
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Base banner styles */
+    #geo-banner {
+      display: none;
+      width: 100%;
+      background-color: #FAD000;
+      color: #000;
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.15em;
+      padding: 12px 0;
+      box-sizing: border-box;
+      white-space: normal; /* allow wrapping */
+    }
+
+    #geo-banner .country-bubble {
+      background-color: #FFFFFF;
+      color: #000;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      margin: 0 4px;
+      font-size: 0.95em;
+    }
+
+    #geo-banner .country-bubble img {
+      vertical-align: middle;
+      width: 20px;
+      height: auto;
+      margin-right: 6px;
+      display: inline-block;
+    }
+
+    /* Medium mobile (≤480px) */
+    @media (max-width: 480px) {
+      #geo-banner {
+        font-size: 1em;
+        padding: 8px 0;
+      }
+      #geo-banner .country-bubble {
+        font-size: 0.85em;
+        padding: 2px 6px;
+      }
+      #geo-banner .country-bubble img {
+        width: 16px;
+        margin-right: 4px;
+      }
+    }
+
+    /* Very small mobile (≤360px): shorten text via JS fallback */
+    @media (max-width: 360px) {
+      #geo-banner {
+        font-size: 0.95em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="geo-banner">Loading…</div>
+
+  <script>
+    (function () {
+      document.addEventListener('DOMContentLoaded', function () {
+        var banner = document.getElementById('geo-banner');
+        if (!banner) return;
+
+        fetch('https://ipapi.co/json')
+          .then(function (res) {
+            if (!res.ok) throw new Error('Geo lookup failed');
+            return res.json();
+          })
+          .then(function (data) {
+            var countryName = data.country_name || '';
+            var countryCode = data.country || '';
+            if (!countryName || !countryCode) throw new Error('Missing data');
+
+            var ccLower = countryCode.toLowerCase();
+            var flagUrl = 'https://flagcdn.com/24x18/' + ccLower + '.png';
+
+            var innerText = 'YES! THIS WORKS IN ' +
+              '<span class="country-bubble">' +
+              '<img src="' + flagUrl + '" alt="' + countryName + ' flag" />' +
+              countryName +
+              '</span>' +
+              ' ┃ Get Your Store Built in 24 Hours!';
+
+            /* If viewport ≤360px, use a shorter version */
+            if (window.innerWidth <= 360) {
+              innerText = 'YES! IN ' +
+                '<span class="country-bubble">' + countryName + '</span>' +
+                ' – Built in 24h';
+            }
+
+            banner.innerHTML = innerText;
             banner.style.display = 'block';
           })
           .catch(function (err) {
             console.warn('Geo-banner error:', err);
-            banner.style.display = 'none'; // hide if lookup fails
+            banner.style.display = 'none';
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
+ Get Your Store Built in 24 Hours!';
+
+            /* If viewport ≤360px, use a shorter version */
+            if (window.innerWidth <= 360) {
+              innerText = 'YES! IN ' +
+                '<span class="country-bubble">' + countryName + '</span>' +
+                ' – Built in 24h';
+            }
+
+            banner.innerHTML = innerText;
+            banner.style.display = 'block';
+          })
+          .catch(function (err) {
+            console.warn('Geo-banner error:', err);
+            banner.style.display = 'none';
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
+ Get Your Store Built in 24 Hours!';
+
+            /* If viewport ≤360px, use a shorter version */
+            if (window.innerWidth <= 360) {
+              innerText = 'YES! IN ' +
+                '<span class="country-bubble">' + countryName + '</span>' +
+                ' – Built in 24h';
+            }
+
+            banner.innerHTML = innerText;
+            banner.style.display = 'block';
+          })
+          .catch(function (err) {
+            console.warn('Geo-banner error:', err);
+            banner.style.display = 'none';
           });
       });
     })();
